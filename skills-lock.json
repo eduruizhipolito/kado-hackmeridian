@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "assets": {
+      "source": "stellar/stellar-dev-skill",
+      "sourceType": "github",
+      "skillPath": "skills/assets/SKILL.md",
+      "computedHash": "4760ec044c75d6a854e004d8f4081c34ef3eeb653c0af845f6252ac653f85230"
+    },
+    "dapp": {
+      "source": "stellar/stellar-dev-skill",
+      "sourceType": "github",
+      "skillPath": "skills/dapp/SKILL.md",
+      "computedHash": "e738c97944baf739ad4c1426063d55cb91a40d271122a681a163404232c6ef38"
+    },
+    "data": {
+      "source": "stellar/stellar-dev-skill",
+      "sourceType": "github",
+      "skillPath": "skills/data/SKILL.md",
+      "computedHash": "8c66a3ad82ad9d1c91871fdc357e67d54a492c5beaebedaee43ae824c976a263"
+    },
+    "standards": {
+      "source": "stellar/stellar-dev-skill",
+      "sourceType": "github",
+      "skillPath": "skills/standards/SKILL.md",
+      "computedHash": "0f9fce49847339c483ffa06b8a355b9dc36ead6f851f0715971235716bd455ad"
+    }
+  }
+}
