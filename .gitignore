@@ -1,0 +1,27 @@
+# Dependencias
+node_modules/
+
+# Build de Next.js y Vercel
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+
+# Secretos: nunca se suben
+.env
+.env.local
+.env.*.local
+
+# Codigos de los Kados: quien tiene un codigo abre ese Kado
+batches/*.codes.csv
+
+# Logs y archivos del sistema
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
