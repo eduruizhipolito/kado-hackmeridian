@@ -69,9 +69,14 @@ Kadó from the code) and `accounts().sponsor(pk)` (list attendees). RPC has no
 indexed search over classic data and keeps 7 days only. Source: Stellar docs;
 re-check with Raven MCP.
 
-**F8. `submitTransaction` is synchronous** (~5 s until ledger close). The open
-route needs a serverless timeout above Vercel's 10 s default
-(`maxDuration = 60`).
+**F8. `submitTransaction` is synchronous** (~5 s until ledger close). Horizon's
+`/transactions` returns 200, 400 or a 504 timeout, after which the client must
+poll the hash (Stellar docs, Horizon error handling). With Fluid compute, Vercel's
+default function duration is 300 s (Vercel docs, Aug 2026); the open route sets
+`maxDuration = 60` as a cap.
+
+**F9. Protocol 29 (current testnet) introduces no new CAPs** (Stellar docs,
+software versions). Next testnet reset: 16 Dec 2026 (Stellar docs, networks).
 
 ## Design decisions
 
@@ -93,6 +98,22 @@ route needs a serverless timeout above Vercel's 10 s default
   lost response, re-read state first.
 - **Delivery-channel independent:** a direct link, a QR or a typed code reach the
   same opening flow.
+- **One Stellar account** is sponsor, claimable-balance creator and recovery
+  claimant. Its secret lives in Vercel env vars.
+- **Exchange rate** is passed to the batch CLI (`--usd-per-xlm`), not fetched.
+- **The manifest lists each Kadó public key** and the expiration, so the app can
+  tell "expired" from "doesn't exist" after a sweep. Kadó state:
+  account exists → opened; balance exists and now < expiration → closed;
+  balance exists and now ≥ expiration → expired; neither, but the public key is
+  in a manifest → expired; otherwise → not found.
+- **Concurrent opens:** the sponsor is the tx source, so parallel opens can get
+  `tx_bad_seq`. That failure means the tx was never applied, so the route re-reads
+  the sequence, rebuilds and resubmits (max 3 tries, random jitter). Any other
+  failure or timeout: re-read state, never resubmit blindly.
+- **Open transactions carry 30 s timebounds**, so a re-read after they expire is
+  conclusive.
+- **`/` is the landing hero and the code entry (P0) in one screen.**
+- **Panel time to open** = `created_at` of the claim operation − batch `created_at`.
 
 ### Why no database
 
@@ -142,6 +163,13 @@ verifiable on-chain. Fewer moving parts on bad event wifi.
 
 - **Bearer:** whoever has the code opens the Kadó. Acceptable in a controlled room.
 - **Custody window** between deposit and opening. Can shrink, cannot disappear.
+- **Custody continues after opening:** the account key is derived from the code
+  and a server salt, so the operator can still sign for the account.
+- **The USD amount is the value at generation.** The asset is XLM; its USD value
+  moves after that.
+- **Griefing:** the Kadó public key is public on-chain. If someone creates that
+  account first, the Kadó can't be opened; the organizer recovers it after expiry.
+- **The panel is public** (read-only, all data is on-chain).
 - **Hidden amount is UI only**: it is public on-chain.
 - **The sponsor is critical infrastructure:** if it runs out of XLM, every opening
   fails. Monitor its balance.
@@ -154,6 +182,10 @@ verifiable on-chain. Fewer moving parts on bad event wifi.
 - Send / Receive from the balance screen (needs sponsor fee-bump).
 - Automatic expiration sweep job.
 - Printable QR sheet.
+- Channel-account pool for many concurrent opens (needed for a 40-person room).
+- Third-party Horizon provider for mainnet (SDF lists only testnet and futurenet
+  Horizon instances).
+- Non-custodial key after opening (attendee-held key or passkey).
 
 ## Discarded (do not re-propose)
 
