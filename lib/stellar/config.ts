@@ -12,8 +12,6 @@ export const HORIZON_URL = process.env.HORIZON_URL ?? "https://horizon-testnet.s
 // Testnet only for the hackathon (SPEC.md).
 export const NETWORK_PASSPHRASE = Networks.TESTNET;
 
-export const EXPLORER_URL = "https://stellar.expert/explorer/testnet";
-
 let server: Horizon.Server | undefined;
 export function horizon(): Horizon.Server {
   server ??= new Horizon.Server(HORIZON_URL);

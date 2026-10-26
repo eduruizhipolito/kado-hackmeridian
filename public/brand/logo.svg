@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Kadó">
+  <polygon points="60,38 100,58 60,78 20,58" fill="#ff6b4a"/>
+  <polygon points="20,58 60,38 72,10 32,30" fill="#4b2fa3" stroke="#fff3e2" stroke-width="2"/>
+  <polygon points="20,58 60,78 60,116 20,96" fill="#4b2fa3" stroke="#fff3e2" stroke-width="2"/>
+  <polygon points="60,78 100,58 100,96 60,116" fill="#4b2fa3" stroke="#fff3e2" stroke-width="2"/>
+  <line x1="60" y1="78" x2="60" y2="116" stroke="#fff3e2" stroke-width="2"/>
+  <g fill="#fff3e2" font-weight="800" font-size="21" font-family="'Plus Jakarta Sans', sans-serif" letter-spacing="-0.84">
+    <text transform="matrix(1 0.5 0 1 0 0)" x="25" y="80">Ka</text>
+    <text transform="matrix(1 -0.5 0 1 0 0)" x="64" y="133">Dó</text>
+  </g>
+</svg>
