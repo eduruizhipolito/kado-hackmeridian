@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* DESIGN.md palette: six colors, there is no seventh. */
+@theme {
+  --color-*: initial;
+  --color-lid: #4b2fa3;
+  --color-inside: #fff3e2;
+  --color-ink: #241c33;
+  --color-seam: #ff6b4a;
+  --color-confirmed: #2e9e6b;
+  --color-muted: #7a6f8f;
+
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+
+  /* Flat planes only: no rounded corners, no shadows. */
+  --radius-*: initial;
+  --shadow-*: initial;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-lid);
+  color: var(--color-inside);
+  font-size: 16px;
+}

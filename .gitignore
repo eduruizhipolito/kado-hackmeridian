@@ -25,3 +25,5 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
+# Any CSV may hold codes: never commit one
+*.csv
