@@ -5,7 +5,7 @@
 <img src="public/brand/logo.svg" alt="Kadó logo" width="96">
 
 **Live demo:** https://kado-hackmeridian.vercel.app (Stellar **testnet**)
-· **Video:** https://www.loom.com/share/286ec332d4654a4a9a72e1d575af13f2
+· **Video:** https://youtu.be/AVoEdAbrd0g
 · **Organizer panel:** https://kado-hackmeridian.vercel.app/panel
 
 HackMeridian · Genesis · thematic track **Stellar Unlocked**: the whole product
