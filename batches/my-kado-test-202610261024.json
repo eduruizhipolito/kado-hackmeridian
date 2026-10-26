@@ -1,0 +1,25 @@
+{
+  "id": "my-kado-test-202610261024",
+  "label": "My Kado test",
+  "network": "testnet",
+  "createdAt": "2026-10-26T10:24:27.029Z",
+  "expiresAt": "2026-10-28T10:24:24.737Z",
+  "amountXlm": "10.0000000",
+  "usdPerXlm": 0.2,
+  "amountUsd": "2.00",
+  "sponsor": "GCHFQTSHH7ZMDXEMEEVYCWK2HYXU5VTZDC5XWPJXIR4F73VSF7BBD5ZZ",
+  "kados": [
+    {
+      "publicKey": "GCQIOHBQBTFVEWUNHLNS2X6FUVBJ7OITNI4MY5RW445MHTO45KOI7TUB"
+    },
+    {
+      "publicKey": "GDAZCCSIPDLJ4EPGZV36BVOUMKXDY5B6X7UUKJKP5WNSWK3KLWXOROM7"
+    },
+    {
+      "publicKey": "GC3ZYPWAEADZPKSSLQV3AJLVZBSWCIXLCJIOEU6ZLPLQRPOQSWBJR5S3"
+    }
+  ],
+  "txHashes": [
+    "d5e1c79ebd71578d76986bb254d07d19083ecfe577e07eba897d7b0ddc45b5d1"
+  ]
+}

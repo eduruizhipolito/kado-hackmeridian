@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { accountUrl } from "@/lib/code-format";
+import { getMyKado, setMyKado } from "@/lib/my-kado";
 import type { OpenResult } from "@/lib/stellar/open";
 
 type Opened = Extract<OpenResult, { state: "opened" }>;
@@ -34,10 +35,14 @@ export function Kado({ code, initial }: { code: string; initial: OpenResult }) {
       const response = await fetch("/api/open", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ code }),
+        // A later Kadó in this browser lands in My Kadó's account (SPEC F3b).
+        body: JSON.stringify({ code, into: getMyKado() ?? undefined }),
       });
       const result = (await response.json()) as OpenResult;
-      if (result.state === "opened") setView({ step: "revealed", kado: result });
+      if (result.state === "opened") {
+        if (!result.addedToMyKado) setMyKado(code);
+        setView({ step: "revealed", kado: result });
+      }
       else if (result.state === "expired" || result.state === "not_found") setView({ step: "error", reason: result.state });
       else setView({ step: "closed", retry: true });
     } catch {
@@ -91,28 +96,56 @@ export function Kado({ code, initial }: { code: string; initial: OpenResult }) {
   );
 }
 
+function when(iso: string): string {
+  return new Date(iso).toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+}
+
+/**
+ * P4: where this code's money is, live from chain. A Kadó added to another
+ * one resolves to that account (the server follows the payment, F3b).
+ */
 function Balance({ code, kado, alreadyOpened }: { code: string; kado: Opened; alreadyOpened: boolean }) {
   const [copied, setCopied] = useState(false);
-  // The account's balance on-chain, not the gift amount: refreshed on every visit.
-  const [balanceUsd, setBalanceUsd] = useState<string | null | undefined>(kado.balanceUsd);
+  const [view, setView] = useState(kado);
   const link = typeof window === "undefined" ? "" : window.location.href;
 
   useEffect(() => {
     fetch(`/api/kado/${encodeURIComponent(code)}`)
       .then((response) => response.json() as Promise<OpenResult>)
       .then((result) => {
-        if (result.state === "opened") setBalanceUsd(result.balanceUsd ?? null);
+        if (result.state !== "opened") return;
+        setView(result);
+        // A browser with no My Kadó adopts a Kadó that holds its own gift.
+        if (!result.addedToMyKado) setMyKado(code);
       })
       .catch(() => {}); // keep what we have; the receipt link is always live
   }, [code]);
 
+  const { account, balanceUsd, receipts } = view;
+
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center gap-6 bg-inside px-4 py-10 text-center text-ink">
+      {view.addedToMyKado && !alreadyOpened && <p className="font-bold text-confirmed">Added to your balance.</p>}
       {alreadyOpened && <p className="text-muted">This Kadó was already opened.</p>}
       <p className="font-bold">Your balance</p>
       <p className="kado-amount">{balanceUsd === undefined ? "…" : balanceUsd ? `≈ $${balanceUsd}` : "—"}</p>
+      {receipts && receipts.length > 0 && (
+        <div className="w-full max-w-xs text-left">
+          <p className="mb-2 text-sm font-bold text-muted">
+            {receipts.length === 1 ? "1 Kadó received" : `${receipts.length} Kadós received`}
+          </p>
+          <ul className="border-t border-muted/40">
+            {receipts.map((receipt, i) => (
+              <li key={i} className="flex justify-between border-b border-muted/40 py-2">
+                <span>{when(receipt.at)}</span>
+                <span className="font-bold">{receipt.amountUsd ? `$${receipt.amountUsd}` : "Kadó"}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <a
-        href={accountUrl(kado.account)}
+        href={accountUrl(account)}
         target="_blank"
         rel="noopener noreferrer"
         className="w-full max-w-xs bg-ink px-4 py-4 text-lg font-bold text-inside"
