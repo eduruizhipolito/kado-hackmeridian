@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { accountUrl } from "@/lib/code-format";
 import type { OpenResult } from "@/lib/stellar/open";
 
@@ -46,7 +46,7 @@ export function Kado({ code, initial }: { code: string; initial: OpenResult }) {
   }
 
   if (view.step === "error") return <ErrorScreen reason={view.reason} />;
-  if (view.step === "balance") return <Balance kado={view.kado} alreadyOpened={view.alreadyOpened} />;
+  if (view.step === "balance") return <Balance code={code} kado={view.kado} alreadyOpened={view.alreadyOpened} />;
 
   const revealed = view.step === "revealed";
   return (
@@ -91,15 +91,26 @@ export function Kado({ code, initial }: { code: string; initial: OpenResult }) {
   );
 }
 
-function Balance({ kado, alreadyOpened }: { kado: Opened; alreadyOpened: boolean }) {
+function Balance({ code, kado, alreadyOpened }: { code: string; kado: Opened; alreadyOpened: boolean }) {
   const [copied, setCopied] = useState(false);
+  // The account's balance on-chain, not the gift amount: refreshed on every visit.
+  const [balanceUsd, setBalanceUsd] = useState<string | null | undefined>(kado.balanceUsd);
   const link = typeof window === "undefined" ? "" : window.location.href;
+
+  useEffect(() => {
+    fetch(`/api/kado/${encodeURIComponent(code)}`)
+      .then((response) => response.json() as Promise<OpenResult>)
+      .then((result) => {
+        if (result.state === "opened") setBalanceUsd(result.balanceUsd ?? null);
+      })
+      .catch(() => {}); // keep what we have; the receipt link is always live
+  }, [code]);
 
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center gap-6 bg-inside px-4 py-10 text-center text-ink">
       {alreadyOpened && <p className="text-muted">This Kadó was already opened.</p>}
       <p className="font-bold">Your balance</p>
-      <p className="kado-amount">{kado.amountUsd ? `≈ $${kado.amountUsd}` : "—"}</p>
+      <p className="kado-amount">{balanceUsd === undefined ? "…" : balanceUsd ? `≈ $${balanceUsd}` : "—"}</p>
       <a
         href={accountUrl(kado.account)}
         target="_blank"

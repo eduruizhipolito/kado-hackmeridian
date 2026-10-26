@@ -4,7 +4,7 @@ import { orNull, withRetry } from "./stellar/horizon";
 
 export type KadoState =
   | { state: "closed"; balanceId: string; amountXlm: string; expiresAt: Date }
-  | { state: "opened"; account: string }
+  | { state: "opened"; account: string; balanceXlm: string }
   | { state: "expired" }
   | { state: "not_found" };
 
@@ -40,7 +40,10 @@ export async function getKadoState(
     withRetry(() => server.claimableBalances().claimant(publicKey).limit(10).call()),
   ]);
 
-  if (account) return { state: "opened", account: publicKey };
+  if (account) {
+    const balanceXlm = account.balances.find((b) => b.asset_type === "native")?.balance ?? "0";
+    return { state: "opened", account: publicKey, balanceXlm };
+  }
 
   for (const balance of balances.records) {
     if (balance.asset !== "native") continue;
