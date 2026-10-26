@@ -1,0 +1,33 @@
+# Kadó
+
+> Gift digital dollars to anyone, no wallet needed. An event gives each attendee a code; they tap Open and, in one Stellar transaction, get their own funded Stellar account. No app, no seed phrase, no email, no fee to pay. Runs on Stellar testnet.
+
+Built for HackMeridian 2026 (Genesis track, thematic track Stellar Unlocked). The whole product uses two native Stellar protocol features and no smart contract:
+
+- Claimable balances (CAP-23): each gift is locked on-chain for a public key whose account does not exist yet, with a time predicate that returns it to the organizer if nobody opens it.
+- Sponsored reserves (CAP-33): the organizer carries the new account's reserve, so the attendee starts at 0 XLM and the gift arrives whole.
+
+Opening is one atomic transaction (beginSponsoringFutureReserves, createAccount with starting balance 0, endSponsoringFutureReserves, claimClaimableBalance), signed by a channel account, the sponsor and the attendee key. Either the account is created and the gift is delivered, or nothing happens. There is no database: all state is read from Horizon.
+
+## Try it
+
+- [Home and code entry](https://kado-hackmeridian.vercel.app/): type a demo code and tap Open
+- [Demo codes](https://github.com/eduruizhipolito/kado-hackmeridian#try-it-judges): 30 testnet codes, each opens once
+- [Organizer panel](https://kado-hackmeridian.vercel.app/panel): generated, opened, open rate and time to open, read from chain
+
+## Docs
+
+- [README](https://github.com/eduruizhipolito/kado-hackmeridian#readme): problem, setup, architecture, on-chain evidence, known limitations, prior work
+- [THESIS.md](https://github.com/eduruizhipolito/kado-hackmeridian/blob/main/THESIS.md): user, problem, value proposition, why Stellar
+- [SPEC.md](https://github.com/eduruizhipolito/kado-hackmeridian/blob/main/SPEC.md): scope, Stellar facts with sources, design decisions
+
+## On-chain evidence (Stellar testnet)
+
+- [30 gifts created in one transaction](https://stellar.expert/explorer/testnet/tx/8f28e192576fd1a85b2868ad09b614e292e60b040c23001cf24ceebe4c909a1f)
+- [An opening on the live site](https://stellar.expert/explorer/testnet/tx/c314a657c51086b93aebec6f73705e4b9cdb248b7cca1f453bcf32880edae79d)
+- [Sponsor account](https://stellar.expert/explorer/testnet/account/GCHFQTSHH7ZMDXEMEEVYCWK2HYXU5VTZDC5XWPJXIR4F73VSF7BBD5ZZ)
+
+## Optional
+
+- [Source code](https://github.com/eduruizhipolito/kado-hackmeridian)
+- Known limitations: bearer codes, custodial in this version, testnet only, no off-ramp yet
