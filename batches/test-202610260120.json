@@ -1,0 +1,25 @@
+{
+  "id": "test-202610260120",
+  "label": "Test",
+  "network": "testnet",
+  "createdAt": "2026-10-26T01:20:47.276Z",
+  "expiresAt": "2026-10-28T01:20:42.155Z",
+  "amountXlm": "10.0000000",
+  "usdPerXlm": 0.2,
+  "amountUsd": "2.00",
+  "sponsor": "GCHFQTSHH7ZMDXEMEEVYCWK2HYXU5VTZDC5XWPJXIR4F73VSF7BBD5ZZ",
+  "kados": [
+    {
+      "publicKey": "GBRUYKOZWDQFFH3VGEINP2WI37QS2J3BVXFKGU7MTTKF6EPJB2ROUWTL"
+    },
+    {
+      "publicKey": "GDBQGYJVDEOKSAD5DHRDYWP5ZIZATBVR33WDEPIQKJEQ5KMZBRWZF33L"
+    },
+    {
+      "publicKey": "GBE2JOCXIRY5MJIG5DQRES56JHAACBTKTHPC5RZP6DRHLSJXATTZ7A2U"
+    }
+  ],
+  "txHashes": [
+    "df0344ba8eaa91570712e982506cbb01041349a260c4dc82bb81a6b5689d82b4"
+  ]
+}

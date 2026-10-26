@@ -60,6 +60,8 @@ So opening is idempotent: retry is safe, double delivery is impossible.
 A generated, unopened Kadó (claimable balance with 2 claimants) also locks
 2 reserves. Budget **1.0 XLM per Kadó** (1.5 with an issued asset), locked in the
 sponsor, not spent. Fees are noise (~0.00001 XLM per op).
+Testnet evidence: tx `df0344ba…82b4` created 3 two-claimant balances and the
+sponsor's `num_sponsoring` went to 6 (one reserve per claimant).
 
 **F6. With an issued asset the attendee ends with 0 XLM** and cannot pay any
 future fee. For the hackathon, deliver **XLM** and show its USD equivalent.
