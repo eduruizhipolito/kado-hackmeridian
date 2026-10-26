@@ -5,7 +5,8 @@
 <img src="public/brand/logo.svg" alt="Kadó logo" width="96">
 
 **Live demo:** https://kado-hackmeridian.vercel.app (Stellar **testnet**)
-· **Video:** _link coming_
+· **Video:** https://www.loom.com/share/286ec332d4654a4a9a72e1d575af13f2
+· **Organizer panel:** https://kado-hackmeridian.vercel.app/panel
 
 HackMeridian · Genesis · thematic track **Stellar Unlocked**: the whole product
 runs on two native protocol features, claimable balances (CAP-23) and sponsored
@@ -36,6 +37,9 @@ opens.
 2. Tap **Open**. In about 5 seconds the Kadó opens and shows the amount.
 3. Tap **Continue → View receipt**: it opens the new account on stellar.expert
    (testnet) with its 10 XLM balance, sponsored by our account.
+4. Tap **Open another Kadó** and open a second code **in the same browser**:
+   it lands in the same balance ("My Kadó"), which now shows ≈ $4.00 and both
+   Kadós received. Another browser or an incognito window is another person.
 
 Each code opens **once** (it's a bearer gift). If one says "already opened",
 someone got there first: pick another. 30 Kadós of 10 XLM (≈ $2.00 at the
@@ -83,7 +87,15 @@ tx source: channel account                 signs: channel, sponsor, attendee
   `/transactions_async`; a busy channel answers at once and the open retries on
   another one.
 
-**3. No database.** The code finds its claimable balance via Horizon
+**3. My Kadó.** The first Kadó opened in a browser becomes its "My Kadó".
+A later Kadó opened there adds a 5th operation to the same atomic transaction:
+a `payment` of the gift into My Kadó's account. (`accountMerge` can't be used:
+Stellar rejects merging an account in the ledger that created it.) Each Kadó's
+page shows where its money is, the live balance and the Kadós received, all
+read from Horizon. Example: [`d39561da…`](https://stellar.expert/explorer/testnet/tx/d39561da5e9f9def273630add0923913cd3410c13ec5e085c280be256776be49)
+(5 ops, 3 signatures).
+
+**4. No database.** The code finds its claimable balance via Horizon
 (`claimable_balances?claimant=`); "opened" means the account exists. Every state
 the app shows can be checked on-chain.
 
@@ -111,9 +123,12 @@ Load test on testnet: 5 simultaneous opens landed in 7 s; 3 opens forced onto
   rate doesn't waste the budget.
 - **First users:** the Stellar Ambassador Chapter Peru and other outreach events
   (meetups, workshops, university talks): every attendee leaves with an account.
-- **North-star metric:** open rate per event, read from chain (organizer panel).
+- **North-star metric:** open rate per event, read from chain on the
+  [organizer panel](https://kado-hackmeridian.vercel.app/panel) (CSV export).
 - **Roadmap:** Phase 1 pilot at real events, then mainnet with low amounts.
-  Phase 2: person-to-person Kadós by link, non-custodial embedded wallet.
+  Phase 2: a login-based My Kadó that works across devices (non-custodial
+  embedded wallet, e.g. Pollar or Privy), an email route, person-to-person
+  Kadós by link.
   Phase 3: multiple assets and a real off-ramp.
 
 ## Architecture
@@ -121,6 +136,7 @@ Load test on testnet: 5 simultaneous opens landed in 7 s; 3 opens forced onto
 ```
 app/page.tsx              P0: code entry
 app/k/[code]/             P1–P5: closed → opening → open → balance / errors
+app/panel                 P6: organizer metrics from chain + CSV
 app/api/open              POST: builds and submits the opening transaction
 app/api/kado/[code]       GET: Kadó state (no amount before opening)
 lib/code.ts               code generation, scrypt(code, salt) → keypair
@@ -181,6 +197,8 @@ The codes are written to `batches/<id>.codes.csv`, which git ignores.
   fail. Its secret is a hot key on the server.
 - **Griefing:** a Kadó's public key is visible on-chain; if someone creates that
   account first, the Kadó can't be opened (the organizer recovers it after expiry).
+- **My Kadó lives in one browser:** clearing its data or changing device loses
+  the link (each code still opens its own account).
 - **No off-ramp yet**, and no send/receive from the balance screen.
 - **Testnet only.** The next testnet reset is 16 Dec 2026.
 
