@@ -11,6 +11,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "fund-sponsor": "tsx --env-file=.env scripts/fund-sponsor.ts",
+    "create-channels": "tsx --env-file=.env scripts/create-channels.ts",
     "generate-batch": "tsx --env-file=.env scripts/generate-batch.ts",
     "check-lib": "tsx scripts/check-lib.ts",
     "check-batch": "tsx --env-file=.env scripts/check-batch.ts"

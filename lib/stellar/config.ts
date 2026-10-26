@@ -24,6 +24,15 @@ export function sponsorKeypair(): Keypair {
   return Keypair.fromSecret(required("SPONSOR_SECRET"));
 }
 
+/** Channel accounts: tx source and fee payer of each open (SPEC F2). */
+export function channelKeypairs(): Keypair[] {
+  return required("CHANNEL_SECRETS")
+    .split(",")
+    .map((secret) => secret.trim())
+    .filter(Boolean)
+    .map((secret) => Keypair.fromSecret(secret));
+}
+
 export function codeSalt(): string {
   return required("CODE_SALT");
 }
