@@ -6,8 +6,8 @@ landing page (DESIGN.md).
 
 ## Before recording
 
-- **Codes:** use the 3 Kadós reserved for the video, in
-  `batches/video-and-testing-202610261032.codes.csv` (on your machine, git-ignored; 10 codes). Valid
+- **Codes:** use the Kadós reserved for the video, in
+  `batches/video-and-testing-202610261032.codes.csv` and `batches/video-extra-202610261124.codes.csv` (on your machine, git-ignored; 16 codes). Valid
   until 2 Nov. Don't use the judges' codes from the README. One take uses one code
   (two in the same browser show My Kadó adding up).
 - **Phone:** mobile data or good wifi, brightness up, notifications off, browser

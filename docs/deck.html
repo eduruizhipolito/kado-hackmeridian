@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kadó Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lid: #4b2fa3;
+    --inside: #fff3e2;
+    --ink: #241c33;
+    --seam: #ff6b4a;
+    --confirmed: #2e9e6b;
+    --muted: #7a6f8f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--ink); }
+  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--ink); }
+  .deck { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 24px 0; }
+  .frame { width: 1280px; height: 720px; transform-origin: top left; }
+  .slide {
+    width: 1280px; height: 720px; overflow: hidden; position: relative;
+    padding: 72px 88px; display: flex; flex-direction: column;
+  }
+  .lid { background: var(--lid); color: var(--inside); }
+  .cream { background: var(--inside); color: var(--ink); }
+  .kicker { font-size: 18px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .lid .kicker { color: var(--inside); opacity: 0.7; }
+  h1 { font-size: 64px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+  h2 { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-top: 16px; }
+  p, li { font-size: 22px; line-height: 1.45; }
+  .foot { position: absolute; left: 88px; right: 88px; bottom: 40px; display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; color: var(--muted); }
+  .lid .foot { color: var(--inside); opacity: 0.6; }
+  .mono { font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; }
+
+  /* 1. Title */
+  .title { justify-content: center; }
+  .title .row { display: flex; align-items: center; gap: 48px; }
+  .title h1 { font-size: 112px; }
+  .title .line { font-size: 40px; font-weight: 700; margin-top: 12px; letter-spacing: -0.02em; }
+  .title .meta { margin-top: 56px; font-size: 20px; opacity: 0.75; }
+
+  /* 2. Problem */
+  .steps { display: flex; gap: 0; margin-top: 56px; }
+  .step { flex: 1; padding: 28px 24px; border-left: 4px solid var(--ink); }
+  .step .n { font-size: 16px; font-weight: 700; color: var(--muted); }
+  .step .t { font-size: 28px; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+  .step.gift { background: var(--ink); color: var(--inside); border-left-color: var(--ink); }
+  .step.gift .n { color: var(--inside); opacity: 0.6; }
+  .strike { text-decoration: line-through; text-decoration-thickness: 3px; }
+  .problem-note { margin-top: 48px; display: flex; gap: 64px; }
+  .problem-note p { flex: 1; }
+
+  /* 3. Demo */
+  .phones { display: flex; gap: 40px; margin-top: 40px; align-items: flex-start; }
+  .phone { width: 220px; height: 400px; border: 3px solid var(--inside); padding: 32px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .phone.open { background: var(--inside); color: var(--ink); }
+  .phone .cap { font-size: 18px; font-weight: 700; }
+  .phone .btn { margin-top: 28px; background: var(--seam); color: var(--ink); font-weight: 800; font-size: 20px; padding: 14px 40px; }
+  .phone .bar { margin-top: 28px; width: 100%; height: 6px; background: rgba(255,243,226,0.25); }
+  .phone .bar i { display: block; width: 62%; height: 100%; background: var(--inside); }
+  .phone .amt { font-size: 56px; font-weight: 800; letter-spacing: -0.04em; }
+  .phone .ok { margin-top: 8px; font-size: 20px; font-weight: 700; color: var(--confirmed); }
+  .label { margin-top: 14px; font-size: 16px; font-weight: 700; opacity: 0.7; text-align: center; width: 220px; }
+  .demo-side { flex: 1; padding-left: 16px; }
+  .demo-side .big { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+  .demo-side ul { list-style: none; margin-top: 24px; }
+  .demo-side li { padding: 10px 0; border-top: 1px solid rgba(255,243,226,0.3); font-size: 20px; }
+
+  /* 4. How */
+  .how { display: flex; gap: 48px; margin-top: 36px; }
+  .how .col { flex: 1; }
+  .feat { padding: 22px 24px; background: var(--lid); color: var(--inside); margin-bottom: 16px; }
+  .feat b { display: block; font-size: 24px; font-weight: 800; }
+  .feat span { font-size: 18px; opacity: 0.85; }
+  .tx { background: var(--ink); color: var(--inside); padding: 24px 28px; font-size: 17px; line-height: 1.75; }
+  .tx .h { color: var(--inside); opacity: 0.6; font-size: 15px; margin-bottom: 6px; }
+  .tx .op { display: flex; justify-content: space-between; }
+  .tx .op em { font-style: normal; opacity: 0.6; }
+  .atomic { margin-top: 16px; font-size: 20px; font-weight: 700; }
+  .atomic .check { color: var(--confirmed); }
+
+  /* 5. Organizers */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 48px; }
+  .stat { padding: 28px 24px; border-left: 4px solid var(--lid); }
+  .stat .v { font-size: 56px; font-weight: 800; letter-spacing: -0.04em; color: var(--lid); }
+  .stat .k { font-size: 18px; margin-top: 8px; line-height: 1.4; }
+  .proof { margin-top: 48px; font-size: 18px; color: var(--muted); line-height: 1.7; }
+  .proof b { color: var(--ink); }
+
+  /* 6. Next */
+  .phases { display: flex; gap: 0; margin-top: 44px; }
+  .phase { flex: 1; padding: 28px 28px 32px; border-left: 4px solid var(--inside); }
+  .phase .n { font-size: 16px; font-weight: 700; opacity: 0.7; }
+  .phase .t { font-size: 28px; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+  .phase p { font-size: 19px; margin-top: 12px; opacity: 0.9; }
+  .phase.now { background: var(--inside); color: var(--ink); border-left-color: var(--seam); }
+  .honest { display: flex; gap: 40px; margin-top: 40px; font-size: 18px; }
+  .honest div { flex: 1; }
+  .honest b { display: block; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; margin-bottom: 4px; }
+
+  /* 7. Close */
+  .close { justify-content: center; align-items: center; text-align: center; }
+  .close h1 { font-size: 72px; margin-top: 32px; }
+  .close .links { margin-top: 48px; font-size: 24px; font-weight: 700; line-height: 1.8; }
+  .close .cta { display: inline-block; margin-top: 32px; background: var(--seam); color: var(--ink); font-weight: 800; font-size: 24px; padding: 16px 44px; }
+
+  @media print {
+    html, body { background: none; }
+    .deck { display: block; padding: 0; gap: 0; }
+    .frame { transform: none !important; width: 1280px; height: 720px; page-break-after: always; break-after: page; }
+  }
+  @page { size: 1280px 720px; margin: 0; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- 1 · TITLE  (0:00–0:05) -->
+<div class="frame"><section class="slide lid title">
+  <div class="row">
+    <svg width="200" height="200" viewBox="0 0 120 120" role="img" aria-label="Kadó logo">
+      <polygon points="60,38 100,58 60,78 20,58" fill="#ff6b4a"/>
+      <polygon points="20,58 60,38 72,10 32,30" fill="#4b2fa3" stroke="#fff3e2" stroke-width="2"/>
+      <polygon points="20,58 60,78 60,116 20,96" fill="#4b2fa3" stroke="#fff3e2" stroke-width="2"/>
+      <polygon points="60,78 100,58 100,96 60,116" fill="#4b2fa3" stroke="#fff3e2" stroke-width="2"/>
+      <line x1="60" y1="78" x2="60" y2="116" stroke="#fff3e2" stroke-width="2"/>
+      <g fill="#fff3e2" font-weight="800" font-size="21" font-family="'Plus Jakarta Sans', sans-serif" letter-spacing="-0.84">
+        <text transform="matrix(1 0.5 0 1 0 0)" x="25" y="80">Ka</text>
+        <text transform="matrix(1 -0.5 0 1 0 0)" x="64" y="133">Dó</text>
+      </g>
+    </svg>
+    <div>
+      <h1>Kadó</h1>
+      <div class="line">Gift digital dollars to anyone,<br>no wallet needed.</div>
+    </div>
+  </div>
+  <div class="meta">HackMeridian 2026 · Genesis · Stellar Unlocked · Built on Stellar testnet</div>
+</section></div>
+
+<!-- 2 · PROBLEM  (0:05–0:35) -->
+<div class="frame"><section class="slide cream">
+  <div class="kicker">The problem</div>
+  <h2>Today, receiving a gift starts with homework.</h2>
+  <div class="steps">
+    <div class="step"><div class="n">Step 1</div><div class="t">Install<br>a wallet app</div></div>
+    <div class="step"><div class="n">Step 2</div><div class="t">Guard a<br>seed phrase</div></div>
+    <div class="step"><div class="n">Step 3</div><div class="t">Get XLM<br>for fees</div></div>
+    <div class="step gift"><div class="n">Step 4</div><div class="t">…then<br>the gift</div></div>
+  </div>
+  <div class="problem-note">
+    <p><b>Almost nobody finishes the homework.</b> At outreach events in Peru (meetups, workshops, university talks) people leave curious, but without an account and without funds.</p>
+    <p>Builders already have wallets. <b>The people we want to reach don't.</b> Interest without conversion.</p>
+  </div>
+  <div class="foot"><span>Kadó</span><span>02</span></div>
+</section></div>
+
+<!-- 3 · LIVE DEMO  (0:35–2:05) -->
+<div class="frame"><section class="slide lid">
+  <div class="kicker">Live demo</div>
+  <h2>A code, one tap, a real Stellar account.</h2>
+  <div class="phones">
+    <div>
+      <div class="phone"><div class="cap">The event left you<br>a Kadó.</div><div class="btn">Open</div></div>
+      <div class="label">1 · Closed. Amount hidden.</div>
+    </div>
+    <div>
+      <div class="phone"><div class="cap">Opening…</div><div class="bar"><i></i></div></div>
+      <div class="label">2 · One transaction, ~5 s</div>
+    </div>
+    <div>
+      <div class="phone open"><div class="amt">$2.00</div><div class="ok">It's yours.</div></div>
+      <div class="label">3 · Funded account, verifiable</div>
+    </div>
+    <div class="demo-side">
+      <div class="big">No app. No seed phrase. No email. No fee to pay.</div>
+      <ul>
+        <li>Link, QR or a typed code</li>
+        <li>Receipt = the account on stellar.expert</li>
+        <li>A second Kadó lands in the same account</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>kado-hackmeridian.vercel.app · demo codes in the README</span><span>03</span></div>
+</section></div>
+
+<!-- 4 · HOW  (2:05–2:30) -->
+<div class="frame"><section class="slide cream">
+  <div class="kicker">How it works</div>
+  <h2>Two native Stellar features. No smart contract.</h2>
+  <div class="how">
+    <div class="col">
+      <div class="feat"><b>Claimable balances · CAP-23</b><span>The gift waits on-chain for an account that doesn't exist yet. Unopened? It returns to the organizer after expiry.</span></div>
+      <div class="feat"><b>Sponsored reserves · CAP-33</b><span>The organizer carries the new account's reserve, so the attendee starts at 0 XLM and the gift arrives whole.</span></div>
+      <div class="atomic"><span class="check">■</span> Atomic: the account is created <i>and</i> the Kadó opens, or nothing happens. Retrying is always safe.</div>
+    </div>
+    <div class="col">
+      <div class="tx mono">
+        <div class="h">ONE TRANSACTION · 3 SIGNATURES</div>
+        <div class="op"><span>1 beginSponsoringFutureReserves</span><em>sponsor</em></div>
+        <div class="op"><span>2 createAccount (start 0)</span><em>sponsor</em></div>
+        <div class="op"><span>3 endSponsoringFutureReserves</span><em>attendee</em></div>
+        <div class="op"><span>4 claimClaimableBalance</span><em>attendee</em></div>
+        <div class="h" style="margin-top:14px">FEE + SEQUENCE: CHANNEL ACCOUNT POOL</div>
+        <div class="op"><span>tx 06d77fdc…620c</span><em>testnet</em></div>
+      </div>
+      <p style="font-size:18px;margin-top:16px;color:var(--muted)">No database: the code derives a key (scrypt), Horizon finds its balance, "opened" means the account exists.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Kadó</span><span>04</span></div>
+</section></div>
+
+<!-- 5 · FOR ORGANIZERS  (2:30–2:40) -->
+<div class="frame"><section class="slide cream">
+  <div class="kicker">For organizers</div>
+  <h2>Onboarding a person costs cents, and nothing is wasted.</h2>
+  <div class="stats">
+    <div class="stat"><div class="v">≈$0.20</div><div class="k">locked capital per new account (1 XLM reserve), on top of the gift</div></div>
+    <div class="stat"><div class="v">0</div><div class="k">budget lost on no-shows: unopened Kadós come back</div></div>
+    <div class="stat"><div class="v">5 in 7 s</div><div class="k">simultaneous opens on testnet, via a pool of 20 channel accounts</div></div>
+    <div class="stat"><div class="v">100%</div><div class="k">on-chain metrics: open rate and time to open, read from Horizon</div></div>
+  </div>
+  <div class="proof">
+    <b>On-chain evidence (testnet):</b> 30 Kadós in one tx <span class="mono">8f28e192…</span> · live open <span class="mono">c314a657…</span> · channel pool <span class="mono">48080fa7…</span><br>
+    Fees ≈ 0.00008 XLM per open · amounts at the event rate of 0.20 USD/XLM
+  </div>
+  <div class="foot"><span>Kadó</span><span>05</span></div>
+</section></div>
+
+<!-- 6 · NEXT  (2:40–2:55) -->
+<div class="frame"><section class="slide lid">
+  <div class="kicker">What's next</div>
+  <h2>From a testnet demo to every outreach room.</h2>
+  <div class="phases">
+    <div class="phase now"><div class="n">Phase 1 · next</div><div class="t">Pilot</div><p>Real events with the Stellar Ambassador Chapter Peru. Measure open rate, then mainnet with low amounts.</p></div>
+    <div class="phase"><div class="n">Phase 2</div><div class="t">Person to person</div><p>Kadós sent by link. Non-custodial embedded wallet.</p></div>
+    <div class="phase"><div class="n">Phase 3</div><div class="t">Spend it</div><p>Multiple assets and a real off-ramp.</p></div>
+  </div>
+  <div class="honest">
+    <div><b>Validated</b>The primitive works end to end on testnet, live.</div>
+    <div><b>Not yet</b>Real users. The pilot answers: do they keep it?</div>
+    <div><b>Declared</b>Custodial in this version. Bearer codes, fine in a room.</div>
+  </div>
+  <div class="foot"><span>Kadó</span><span>06</span></div>
+</section></div>
+
+<!-- 7 · CLOSE  (2:55–3:00) -->
+<div class="frame"><section class="slide lid close">
+  <svg width="140" height="140" viewBox="0 0 120 120" role="img" aria-label="Kadó logo">
+    <polygon points="60,38 100,58 60,78 20,58" fill="#ff6b4a"/>
+    <polygon points="20,58 60,38 72,10 32,30" fill="#4b2fa3" stroke="#fff3e2" stroke-width="2"/>
+    <polygon points="20,58 60,78 60,116 20,96" fill="#4b2fa3" stroke="#fff3e2" stroke-width="2"/>
+    <polygon points="60,78 100,58 100,96 60,116" fill="#4b2fa3" stroke="#fff3e2" stroke-width="2"/>
+    <line x1="60" y1="78" x2="60" y2="116" stroke="#fff3e2" stroke-width="2"/>
+    <g fill="#fff3e2" font-weight="800" font-size="21" font-family="'Plus Jakarta Sans', sans-serif" letter-spacing="-0.84">
+      <text transform="matrix(1 0.5 0 1 0 0)" x="25" y="80">Ka</text>
+      <text transform="matrix(1 -0.5 0 1 0 0)" x="64" y="133">Dó</text>
+    </g>
+  </svg>
+  <h1>Gift digital dollars to anyone,<br>no wallet needed.</h1>
+  <div class="links">kado-hackmeridian.vercel.app<br>github.com/eduruizhipolito/kado-hackmeridian</div>
+</section></div>
+
+</div>
+<script>
+  function fit() {
+    var w = Math.min(window.innerWidth - 32, 1280), s = w / 1280;
+    document.querySelectorAll('.frame').forEach(function (f) {
+      f.style.transform = 'scale(' + s + ')';
+      f.style.width = (1280 * s) + 'px';
+      f.style.height = (720 * s) + 'px';
+    });
+  }
+  if (!window.matchMedia('print').matches) { fit(); window.addEventListener('resize', fit); }
+</script>
+</body>
+</html>
