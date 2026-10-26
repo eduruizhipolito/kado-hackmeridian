@@ -66,5 +66,8 @@ Same one-liner, same words, same look:
 > **Gift digital dollars to anyone, no wallet needed.**
 
 - README: line 1 under the title.
-- Landing: hero on violet, cream text, one coral button "Try the demo".
+- Landing: hero on violet, cream text, with the code entry (P0) on the same
+  screen. Its **Open** button is the one coral element; "Try the demo" is a
+  cream text link to the demo codes. Below the hero, on cream: how it works and
+  a short "Built on Stellar's native features" strip.
 - Pitch / video: opens with the line, then the live opening on a phone.
