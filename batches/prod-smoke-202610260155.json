@@ -1,0 +1,19 @@
+{
+  "id": "prod-smoke-202610260155",
+  "label": "Prod smoke",
+  "network": "testnet",
+  "createdAt": "2026-10-26T01:55:22.224Z",
+  "expiresAt": "2026-10-28T01:55:20.172Z",
+  "amountXlm": "1.0000000",
+  "usdPerXlm": 0.2,
+  "amountUsd": "0.20",
+  "sponsor": "GCHFQTSHH7ZMDXEMEEVYCWK2HYXU5VTZDC5XWPJXIR4F73VSF7BBD5ZZ",
+  "kados": [
+    {
+      "publicKey": "GDMWS6COJZP4JJM5BW6MTVTQUKMBZI527ZLUMK7NUPUV7Z5A6E65NNMJ"
+    }
+  ],
+  "txHashes": [
+    "c9180d50584bb4aef5e3452053c16482ae9ad29abf8766390f3315c9468a7ff8"
+  ]
+}
