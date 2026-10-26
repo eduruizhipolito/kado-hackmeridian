@@ -28,11 +28,16 @@ Everything else is secondary.
 **F1. A claimable balance can target a public key whose account does not exist.**
 Source: CAP-23; validated on testnet in prior work (tx `916372…`, see THESIS.md).
 
-**F2. Opening is one transaction, two signatures.** Source account is the sponsor,
-because the attendee has no XLM for the fee. Source: CAP-33, prior validation
-`d3e637…`.
+**F2. Opening is one transaction, three signatures.** The tx source is a
+**channel account** from a pool: it pays the fee and supplies the sequence
+number, because the attendee has no XLM and the sponsor alone would serialize
+every open. The sponsor still sponsors the reserves as the source of ops 1–2.
+Source: CAP-33, prior validation `d3e637…` (sponsor as tx source, 2 signatures);
+channel variant validated on testnet in #4, tx `06d77fdc…620c` (channel source,
+4 ops, 3 signatures).
 
 ```
+tx source: channel                 signs: channel, sponsor, attendee
 1. beginSponsoringFutureReserves  source: sponsor   sponsoredId: attendee
 2. createAccount startingBalance=0 source: sponsor
 3. endSponsoringFutureReserves    source: attendee
@@ -108,10 +113,14 @@ software versions). Next testnet reset: 16 Dec 2026 (Stellar docs, networks).
   account exists → opened; balance exists and now < expiration → closed;
   balance exists and now ≥ expiration → expired; neither, but the public key is
   in a manifest → expired; otherwise → not found.
-- **Concurrent opens:** the sponsor is the tx source, so parallel opens can get
-  `tx_bad_seq`. That failure means the tx was never applied, so the route re-reads
-  the sequence, rebuilds and resubmits (max 3 tries, random jitter). Any other
-  failure or timeout: re-read state, never resubmit blindly.
+- **Concurrent opens:** each open picks a random channel account
+  (`CHANNEL_SECRETS`, ~20, created by `scripts/create-channels.ts`) as tx source.
+  Tested on testnet (#4): with the sponsor as the only source, two simultaneous
+  opens made Horizon's synchronous submit hang ~60 s and return 504. So opens go
+  through **`/transactions_async`**: `PENDING` → poll the hash until it lands;
+  `TRY_AGAIN_LATER` or `ERROR` (not applied, e.g. two opens picked the same
+  channel) → re-read state, then retry on a different channel (max 3).
+  On any lost response: re-read state, never resubmit blindly.
 - **Open transactions carry 30 s timebounds**, so a re-read after they expire is
   conclusive.
 - **`/` is the landing hero and the code entry (P0) in one screen.**
@@ -184,7 +193,6 @@ verifiable on-chain. Fewer moving parts on bad event wifi.
 - Send / Receive from the balance screen (needs sponsor fee-bump).
 - Automatic expiration sweep job.
 - Printable QR sheet.
-- Channel-account pool for many concurrent opens (needed for a 40-person room).
 - Third-party Horizon provider for mainnet (SDF lists only testnet and futurenet
   Horizon instances).
 - Non-custodial key after opening (attendee-held key or passkey).

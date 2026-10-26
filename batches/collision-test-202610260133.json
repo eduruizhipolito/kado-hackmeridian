@@ -1,0 +1,25 @@
+{
+  "id": "collision-test-202610260133",
+  "label": "Collision test",
+  "network": "testnet",
+  "createdAt": "2026-10-26T01:33:12.257Z",
+  "expiresAt": "2026-10-28T01:33:08.167Z",
+  "amountXlm": "10.0000000",
+  "usdPerXlm": 0.2,
+  "amountUsd": "2.00",
+  "sponsor": "GCHFQTSHH7ZMDXEMEEVYCWK2HYXU5VTZDC5XWPJXIR4F73VSF7BBD5ZZ",
+  "kados": [
+    {
+      "publicKey": "GA5Q7FX6RW56WRXYAMC746ACKDGKIR7BX3VMVIZSAVS63H46NMX3SSTS"
+    },
+    {
+      "publicKey": "GCUUFLGKYHGFYYSBZPAMGYDBHN7GJNCIJWW4LJNYUAFEERUNA4G7A6RU"
+    },
+    {
+      "publicKey": "GCSXXV6TQ2GZ2RBM7DTM3TFN6SOE75BXJKUOUCVMZXNSVCA3Q24CKVJA"
+    }
+  ],
+  "txHashes": [
+    "6707502793bc697947329d97a0cd98e28397eaec4415d475cc67555bda6d6eb9"
+  ]
+}
