@@ -164,6 +164,10 @@ function Balance({ code, kado, alreadyOpened }: { code: string; kado: Opened; al
           {copied ? "Link copied" : "Copy link"}
         </button>
       </div>
+      {/* Back to P0: the next Kadó opened in this browser adds up here (F3b). */}
+      <Link href="/" className="font-bold underline underline-offset-4">
+        Open another Kadó
+      </Link>
     </main>
   );
 }
