@@ -9,7 +9,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "fund-sponsor": "tsx --env-file=.env scripts/fund-sponsor.ts",
+    "generate-batch": "tsx --env-file=.env scripts/generate-batch.ts",
+    "check-lib": "tsx scripts/check-lib.ts",
+    "check-batch": "tsx --env-file=.env scripts/check-batch.ts"
   },
   "dependencies": {
     "@stellar/stellar-sdk": "17.2.1",
