@@ -1,0 +1,25 @@
+{
+  "id": "video-202610260202",
+  "label": "Video",
+  "network": "testnet",
+  "createdAt": "2026-10-26T02:02:47.277Z",
+  "expiresAt": "2026-11-02T02:02:43.135Z",
+  "amountXlm": "10.0000000",
+  "usdPerXlm": 0.2,
+  "amountUsd": "2.00",
+  "sponsor": "GCHFQTSHH7ZMDXEMEEVYCWK2HYXU5VTZDC5XWPJXIR4F73VSF7BBD5ZZ",
+  "kados": [
+    {
+      "publicKey": "GC3FFDEIX2WGITAOJEQ2NOYUJZYECIAMTJO65IUOPFZ4WVD2O2WM7L25"
+    },
+    {
+      "publicKey": "GBRUWPWIN4L43LJ7SA6RDMBBFG47BKBM6JGQRNRYKYWH7ITTC3DGKRVX"
+    },
+    {
+      "publicKey": "GB744JIGGANZGDWYLDHP3MDCZAADTZQEWXEU45U6EJDZ44LJE56AJH3D"
+    }
+  ],
+  "txHashes": [
+    "f230b7596c81cbabc38d6bcc49bee099bf01c9ffd5c0a736609ec718e6044704"
+  ]
+}

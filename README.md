@@ -5,6 +5,7 @@
 <img src="public/brand/logo.svg" alt="Kadó logo" width="96">
 
 **Live demo:** https://kado-hackmeridian.vercel.app (Stellar **testnet**)
+· **Video:** _link coming_
 
 HackMeridian · Genesis · thematic track **Stellar Unlocked**: the whole product
 runs on two native protocol features, claimable balances (CAP-23) and sponsored
