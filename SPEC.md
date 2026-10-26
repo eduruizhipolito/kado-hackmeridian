@@ -125,6 +125,9 @@ software versions). Next testnet reset: 16 Dec 2026 (Stellar docs, networks).
   conclusive.
 - **`/` is the landing hero and the code entry (P0) in one screen.**
 - **Panel time to open** = `created_at` of the claim operation − batch `created_at`.
+  Openings are read from the sponsor's operations: each open tx has the sponsor's
+  `beginSponsoringFutureReserves` for the Kadó key, in the same tx (same
+  `created_at`) as the claim. One paginated read instead of one per account.
 
 ### Why no database
 
