@@ -58,6 +58,20 @@ zero). Prior validation `35a50e…`.
 5. claimClaimableBalance           source: attendee
 ```
 
+**F3b. "My Kadó": a later Kadó lands in the first one's account.** The browser
+remembers the first Kadó opened in it (local storage, per browser). Opening
+another Kadó in that browser adds a 5th operation to the same transaction:
+
+```
+5. payment  source: new Kadó  destination: My Kadó account  amount: the gift
+```
+
+The new account ends at 0 XLM (its reserve stays sponsored). `accountMerge`
+would also return the reserve, but Stellar rejects merging an account created
+in the same ledger (`ACCOUNT_MERGE_SEQNUM_TOO_FAR`: a new account's sequence
+starts at ledger << 32), so it can't be in the same atomic tx. The payment
+keeps everything in one transaction.
+
 **F4. The transaction is atomic.** If any op fails, the account is not created.
 So opening is idempotent: retry is safe, double delivery is impossible.
 
@@ -124,6 +138,12 @@ software versions). Next testnet reset: 16 Dec 2026 (Stellar docs, networks).
 - **Open transactions carry 30 s timebounds**, so a re-read after they expire is
   conclusive.
 - **`/` is the landing hero and the code entry (P0) in one screen.**
+- **My Kadó is per browser.** The first Kadó opened (or an opened Kadó's link
+  visited) in a browser with no My Kadó becomes it; its code is kept in local
+  storage. Later Kadós opened there go into its account (F3b), and P4 always
+  shows My Kadó. Another browser or an incognito window is another person.
+  Kadós received = the first Kadó's own claim + payments into the account from
+  accounts in a batch manifest, read from Horizon.
 - **Panel time to open** = `created_at` of the claim operation − batch `created_at`.
   Openings are read from the sponsor's operations: each open tx has the sponsor's
   `beginSponsoringFutureReserves` for the Kadó key, in the same tx (same
@@ -142,7 +162,7 @@ verifiable on-chain. Fewer moving parts on bad event wifi.
 | P1 | Kadó closed | Amount hidden. One button: Open |
 | P2 | Opening | Linear progress bar, not a spinner (~5 s) |
 | P3 | Kadó open | Amount in USD, big. "It's yours." |
-| P4 | Your balance | Balance, "View receipt", "Save this link to come back" |
+| P4 | Your balance | Live balance of My Kadó, list of Kadós received (amount, date), "View receipt", "Save this link to come back" |
 | P5 | Errors | Code doesn't exist / Already opened / Expired |
 | P6 | Organizer panel (`/panel`) | Per-batch metrics + CSV export |
 
@@ -184,6 +204,8 @@ verifiable on-chain. Fewer moving parts on bad event wifi.
 - **Griefing:** the Kadó public key is public on-chain. If someone creates that
   account first, the Kadó can't be opened; the organizer recovers it after expiry.
 - **The panel is public** (read-only, all data is on-chain).
+- **My Kadó lives in one browser.** Clearing its data or changing device loses
+  the link (the codes still open their accounts).
 - **Hidden amount is UI only**: it is public on-chain.
 - **The sponsor is critical infrastructure:** if it runs out of XLM, every opening
   fails. Monitor its balance.
@@ -191,7 +213,9 @@ verifiable on-chain. Fewer moving parts on bad event wifi.
 
 ## Backlog (out of scope for the hackathon)
 
-- Person-to-person Kadós by link; embedded non-custodial wallet (Privy candidate).
+- Person-to-person Kadós by link; embedded non-custodial wallet (Privy or Pollar
+  candidates): login-based My Kadó that works across devices, email route.
+- Merge the emptied Kadó accounts later to return their reserves to the sponsor.
 - Multiple assets, variable amounts.
 - Send / Receive from the balance screen (needs sponsor fee-bump).
 - Automatic expiration sweep job.
