@@ -22,7 +22,8 @@ Rules:
 
 - **Flat color planes only.** No gradients, no shadows, no rounded corners.
 - Hierarchy comes from color planes and type scale, not from effects.
-- Coral is reserved: one coral element per screen at most.
+- Coral is reserved: one coral element per screen at most. The logo's coral
+  inside does not count.
 - No horizontal scroll ever. No vertical scroll in the opening flow (P1 to P3).
 
 ## Type

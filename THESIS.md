@@ -60,7 +60,8 @@ Kadó is opened, or nothing happens. Retrying is always safe.
 1. **Zero crypto jargon** in the attendee flow. We say "digital dollars".
 2. **Narrow scope.** Anything new goes to the backlog, not the build.
 3. **Declared custody.** Between deposit and opening the operator has effective
-   control. We say so.
+   control. In this version it keeps it after opening too, because the account
+   key comes from the code and a server secret. We say so.
 4. **On-chain evidence.** Every claim is backed by a transaction hash anyone can
    open in the explorer.
 
