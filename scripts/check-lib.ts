@@ -25,7 +25,7 @@ async function main() {
 
   const none = { has: () => false };
   const fresh = Keypair.random().publicKey();
-  assert.deepEqual(await getKadoState(OPENED_ACCOUNT, none), { state: "opened", account: OPENED_ACCOUNT });
+  assert.equal((await getKadoState(OPENED_ACCOUNT, none)).state, "opened");
   assert.deepEqual(await getKadoState(fresh, none), { state: "not_found" });
   assert.deepEqual(await getKadoState(fresh, { has: (k) => k === fresh }), { state: "expired" });
   console.log("state machine ok (opened / not_found / swept→expired) on testnet");

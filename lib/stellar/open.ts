@@ -11,7 +11,13 @@ const FEE_PER_OP = "200";
 const POLL_MS = 1000;
 
 export type OpenResult =
-  | { state: "opened"; account: string; amountUsd: string | null; txHash?: string }
+  | {
+      state: "opened";
+      account: string;
+      amountUsd: string | null; // what the Kadó delivered (P3)
+      balanceUsd?: string | null; // live account balance at the batch rate (P4), from peek
+      txHash?: string;
+    }
   | { state: "closed" }
   | { state: "expired" }
   | { state: "not_found" }
@@ -76,7 +82,14 @@ export async function peekKado(input: string): Promise<OpenResult> {
   const kado = await codeToKeypair(code, codeSalt());
   const state = await getKadoState(kado.publicKey(), knownKeys);
   if (state.state === "opened") {
-    return { state: "opened", account: state.account, amountUsd: findBatch(state.account)?.amountUsd ?? null };
+    const batch = findBatch(state.account);
+    return {
+      state: "opened",
+      account: state.account,
+      amountUsd: batch?.amountUsd ?? null,
+      // Same frozen rate as the gift, so everyone sees consistent dollars (SPEC.md).
+      balanceUsd: batch ? (Number(state.balanceXlm) * batch.usdPerXlm).toFixed(2) : null,
+    };
   }
   return { state: state.state };
 }
