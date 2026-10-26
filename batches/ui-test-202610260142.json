@@ -1,0 +1,19 @@
+{
+  "id": "ui-test-202610260142",
+  "label": "UI test",
+  "network": "testnet",
+  "createdAt": "2026-10-26T01:42:22.308Z",
+  "expiresAt": "2026-10-28T01:42:15.753Z",
+  "amountXlm": "10.0000000",
+  "usdPerXlm": 0.2,
+  "amountUsd": "2.00",
+  "sponsor": "GCHFQTSHH7ZMDXEMEEVYCWK2HYXU5VTZDC5XWPJXIR4F73VSF7BBD5ZZ",
+  "kados": [
+    {
+      "publicKey": "GDO7Z63MX2BBI2DXYO2CU4O2ELQTNFI5O2JGM6OBGMF5QOY2H5HTUHUB"
+    }
+  ],
+  "txHashes": [
+    "2d30e36ab4598b9afc21bf5b00df275fd5c2eaa67cfc07c4abae6bf95c032016"
+  ]
+}
